@@ -15,12 +15,19 @@ var paper = new joint.dia.Paper({
 });
 
 
-graph.addCells([
-    new joint.shapes.standard.Rectangle({ size: { width: 80, height: 50 }}).attr({body: {fill: '#98b5a1'}}),
-    new joint.shapes.basic.Rect({ size: { width: 50, height: 50 }}),
-    new joint.shapes.basic.Circle({ size: { width: 80, height: 50 }}),
-    new joint.shapes.basic.Circle({ size: { width: 50, height: 50 }})
-  ]);
+//create height and width parameters based on input
+var h = parseInt(document.getElementById('input').innerHTML);
+var w = parseInt(document.getElementById('input').innerHTML);
+
+//function that generates structs on layout
+const generateStructs = (height, width) => {
+    graph.addCell(
+        new joint.shapes.standard.Rectangle({ size: { width: width, height: height }}).attr({body: {fill: '#98b5a1'}}),
+    );
+};
+
+//call struct function
+generateStructs(h, w)
   
   // Layout the entire graph
   joint.layout.GridLayout.layout(graph, {
