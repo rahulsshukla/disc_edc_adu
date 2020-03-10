@@ -1,16 +1,17 @@
-
+// Initialize graph
 var graph = new joint.dia.Graph;
 
+// Initialize Paper
 var paper = new joint.dia.Paper({
     el: document.getElementById('ADU-layout'),
     model: graph,
-    width: 600,
-    height: 400,
+    width: 800,
+    height: 500,
     gridSize: 1,
-    gridSize: 20,
-    drawGrid: true,
+    gridSize: 1,
+    drawGrid: false,
     background: {
-        color: '#d6ffe3'
+        color: "green"
     }
 });
 
@@ -19,16 +20,26 @@ var paper = new joint.dia.Paper({
 var h = parseInt(document.getElementById('input').innerHTML);
 var w = parseInt(document.getElementById('input').innerHTML);
 
-//function that generates structs on layout
-const generateStructs = (height, width) => {
-    graph.addCell(
-        new joint.shapes.standard.Rectangle({ size: { width: width, height: height }}).attr({body: {fill: '#98b5a1'}}),
-    );
+//function that generates rectangle onto graph
+const generateRectangle = (height, width, x, y) => {
+    var rect = new joint.shapes.standard.Rectangle({ size: { width: width, height: height }}).attr({body: {fill: "white"}});
+    rect.position(x,y)
+    graph.addCell(rect);
 };
 
-//call struct function
-generateStructs(h, w)
-  
+//call function to generate rectangle on graph
+generateRectangle(h, w, 100, 200)
+
+
+// NOT IN USE resizes and repositions passed in Cell
+const setPosition = (element,x,y) => {
+  element.position(x,y)
+};
+const setHeight = (element,width,height) => {
+  element.resize(width, height);
+};
+
+/*
   // Layout the entire graph
   joint.layout.GridLayout.layout(graph, {
     columns: 2,
@@ -44,3 +55,4 @@ generateStructs(h, w)
       columns: 2,
       marginY: 100
   });
+*/
