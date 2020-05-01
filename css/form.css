@@ -72,8 +72,9 @@ textarea {
     text-decoration: none;
     display: inline-block;
     font-size: 20px;
-    margin-left: 45%;
+    margin-left: 40%;
     cursor: pointer;
+    width: 100px;
 }
 .submit_button:hover {
     /* This extra margin represent roughly the same space as the space between the labels and their text fields */
@@ -85,6 +86,6 @@ textarea {
     text-decoration: none;
     display: inline-block;
     font-size: 20px;
-    margin-left: 45%;
+    margin-left: 40%;
     cursor: pointer;
 }
