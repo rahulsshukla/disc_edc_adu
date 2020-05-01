@@ -1,4 +1,5 @@
 // Temporary globals
+/*
 length_lot = 600
 width_lot = 300
 d_house_front_to_lot_front = 80
@@ -9,6 +10,30 @@ d_wire_to_lot_back = 5 // 5ft with scaler
 zone = 1
 area_lot = 180045
 area_house = 43245
+*/
+
+function parse_query(){
+    var url_string = (window.location.href).toLowerCase()
+    var url = new URL(url_string)
+    this.console.log(url)
+    window.user_front_lot = url.searchParams.get("user_front_lot")
+    window.user_side_lot = url.searchParams.get("user_side_lot")
+    window.user_house = url.searchParams.get("user_house")
+    window.user_zone =  url.searchParams.get("user_zone")
+    window.user_tele =  url.searchParams.get("user_tele")
+    window.house_length =  parseInt(url.searchParams.get("house_length"))
+    window.house_width =  parseInt(url.searchParams.get("house_width"))
+    console.log("user_front_lot: ", user_front_lot,
+        "\nuser_side_lot: ", user_side_lot, 
+        "\nuser_house: ", user_house,
+        "\nuser_zone: ", user_zone,
+        "\nuser_tele: ", user_tele)
+
+
+}
+parse_query()
+console.log("l: ",house_length, "w: ", house_width)
+
 
 // Initialize graph
 var graph = new joint.dia.Graph;
@@ -132,3 +157,5 @@ const setPosition = (element,x,y) => {
 const setHeight = (element,width,height) => {
   element.resize(width, height);
 };
+
+ 
