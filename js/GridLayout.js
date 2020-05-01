@@ -1,3 +1,26 @@
+
+ function parse_query(){
+    var url_string = (window.location.href).toLowerCase()
+    var url = new URL(url_string)
+    this.console.log(url)
+    window.user_front_lot = url.searchParams.get("user_front_lot")
+    window.user_side_lot = url.searchParams.get("user_side_lot")
+    window.user_house = url.searchParams.get("user_house")
+    window.user_zone =  url.searchParams.get("user_zone")
+    window.user_tele =  url.searchParams.get("user_tele")
+    window.house_length =  parseInt(url.searchParams.get("house_length"))
+    window.house_width =  parseInt(url.searchParams.get("house_width"))
+    console.log("user_front_lot: ", user_front_lot,
+        "\nuser_side_lot: ", user_side_lot, 
+        "\nuser_house: ", user_house,
+        "\nuser_zone: ", user_zone,
+        "\nuser_tele: ", user_tele)
+
+
+}
+parse_query()
+console.log("l: ",house_length, "w: ", house_width)
+
 var graph = new joint.dia.Graph;
 
 var paper = new joint.dia.Paper({
@@ -14,9 +37,6 @@ var paper = new joint.dia.Paper({
 });
 
 
-//create height and width parameters based on input
-var h = parseInt(document.getElementById('input').innerHTML);
-var w = parseInt(document.getElementById('input').innerHTML);
 
 //function that generates structs on layout
 const generateStructs = (height, width) => {
@@ -26,7 +46,7 @@ const generateStructs = (height, width) => {
 };
 
 //call struct function
-generateStructs(h, w)
+generateStructs(house_length, house_width)
   
   // Layout the entire graph
   joint.layout.GridLayout.layout(graph, {
