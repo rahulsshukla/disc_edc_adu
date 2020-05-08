@@ -2,10 +2,10 @@
 length_lot = 600
 width_lot = 300
 d_house_front_to_lot_front = 80
-d_right_of_house = 60
+d_right_of_house = 90
 d_house_back_to_lot_back = 350
 d_left_of_house = 40
-d_wire_to_lot_back = 5 // 5ft with scaler
+d_wire_to_lot_back = 0 // 5ft with scaler
 zone = 1
 area_lot = 180045
 area_house = 43245
