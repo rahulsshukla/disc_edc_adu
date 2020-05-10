@@ -1,5 +1,5 @@
 // Temporary globals
-/*
+
 length_lot = 600
 width_lot = 300
 d_house_front_to_lot_front = 80
@@ -10,7 +10,7 @@ d_wire_to_lot_back = 0 // 5ft with scaler
 zone = 1
 area_lot = 180045
 area_house = 43245
-*/
+
 
 function parse_query(){
     var url_string = (window.location.href).toLowerCase()
@@ -36,13 +36,13 @@ console.log("l: ",house_length, "w: ", house_width)
 
 
 // Initialize graph
-var graph = new joint.dia.Graph;
+var lot_graph = new joint.dia.Graph;
 
 // Initialize Paper
 const render_lot = (length_lot, width_lot) => {
   var paper = new joint.dia.Paper({
       el: document.getElementById('ADU-layout'),
-      model: graph,
+      model: lot_graph,
       width: length_lot,
       height: width_lot,
       gridSize: 1,
@@ -57,7 +57,7 @@ const render_lot = (length_lot, width_lot) => {
 }
 
 //function that generates rectangle onto graph
-const render_rectangle = (height, width, x, y) => {
+const render_rectangle = (graph, height, width, x, y) => {
     var rect = new joint.shapes.standard.Rectangle({ size: { width: width, height: height }}).attr({body: {fill: "white"}});
     rect.position(x,y)
     graph.addCell(rect);
@@ -73,7 +73,7 @@ const properties_house = (d_house_front_to_lot_front, d_right_of_house, length_l
   return [height, width, x, y];
 }
 
-// MODEL boundaries free space from physical inputs
+// MODEL returns ADU boundaries free space from physical inputs
 const boundaries_free_space = (length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot) => {
   // returns the x_lower, x_upper, y_lower, y_higher boundaries of adu box
   x_lower = 10 - d_wire_to_lot_back;  // size of 10ft with scaler
@@ -114,41 +114,55 @@ const max_area_of_adu = (area_lot, area_house, d_house_back_to_lot_back, width_l
 // renders house rectangle
 const render_house = (d_house_front_to_lot_front, d_right_of_house, length_lot, width_lot, d_house_back_to_lot_back, d_left_of_house) => {
   house_properties = properties_house(d_house_front_to_lot_front, d_right_of_house, length_lot, width_lot, d_house_back_to_lot_back, d_left_of_house);
-  render_rectangle(house_properties[0], house_properties[1], house_properties[2], house_properties[3]);
+  render_rectangle(lot_graph, house_properties[0], house_properties[1], house_properties[2], house_properties[3]);
 }
 
-// TEMPORARY TESTER
-const render_box = (length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot) => {
-  boundaries = boundaries_free_space(length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot);
-  //render_rectangle(y_upper-y_lower, x_upper-x_lower, x_lower, y_lower)
-  render_rectangle(boundaries[3]-boundaries[2], boundaries[1]-boundaries[0], boundaries[0], boundaries[2])
-}
+// New graph for adu graph
+var adu_graph = new joint.dia.Graph;
 
 const render_box_paper = (length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot) => {
   boundaries = boundaries_free_space(length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot);
   var box_paper = new joint.dia.Paper({
         el: document.getElementById('ADU-box'),
-        model: graph,
+        model: adu_graph,
         width: boundaries[1]-boundaries[0],
         height: boundaries[3]-boundaries[2],
         gridSize: 1,
         gridSize: 1,
         drawGrid: false,
         background: {
-            color: "blue"
+            color: "darkgreen"
         },
         restrictTranslate: true
     });
+  adu_box_elem = document.getElementById('ADU-box');
+  adu_box_elem.style.top = boundaries[2].toString() + "px";
+  adu_box_elem.style.left = boundaries[0].toString() + "px";
+}
+
+// MODEL checks if the size of adu is larger exceeds zone restrictions
+const adu_size_check = () => {
+
+}
+
+// renders size dragging button attached to the adu rectangle
+const render_size_dragger = () => {
+
+}
+
+// renders adu in box_paper
+const render_adu = (init_width, init_height) => {
+  INIT_X = 10
+  INIT_Y = 10
+  render_rectangle(adu_graph, init_height, init_width, INIT_X, INIT_Y)
 }
 
 
 // renders intial fixed stuff
 render_lot(length_lot, width_lot);
 render_house(d_house_front_to_lot_front, d_right_of_house, length_lot, width_lot, d_house_back_to_lot_back, d_left_of_house);
-// below is temp, actually set constraints
-render_box(length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot);
-render_box_paper(length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot)
-render_rectangle(100,200, 10, 20)
+render_box_paper(length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot);
+render_adu(100, 200);
 
 // NOT IN USE resizes and repositions passed in Cell
 const setPosition = (element,x,y) => {
