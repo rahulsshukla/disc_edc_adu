@@ -59,9 +59,19 @@ const render_lot = (length_lot, width_lot) => {
 //function that generates rectangle onto graph
 const render_rectangle = (graph, height, width, x, y) => {
     var rect = new joint.shapes.standard.Rectangle({ size: { width: width, height: height }}).attr({body: {fill: "white"}});
-    rect.position(x,y)
+    rect.position(x,y);
     graph.addCell(rect);
+    return rect;
 };
+
+// generates circle onto graph
+const render_circle = (graph, diameter, x, y) => {
+  var circle = new joint.shapes.standard.Circle();
+  circle.resize(diameter, diameter)
+  circle.position(x,y);
+  graph.addCell(circle);
+  return circle;
+}
 
 // MODEL returns house properties from physical inputs
 const properties_house = (d_house_front_to_lot_front, d_right_of_house, length_lot, width_lot, d_house_back_to_lot_back, d_left_of_house) => {
@@ -107,8 +117,8 @@ const zone_lot_coverage = (zone) => {
 // MODEL computes max area of adu
 const max_area_of_adu = (area_lot, area_house, d_house_back_to_lot_back, width_lot, zone) => {
   lot_coverage = zone_lot_coverage(zone)
-  max_area_of_adu = Math.min(area_lot * lot_coverage - area_house, d_house_back_to_lot_back * width_lot * 2/5);
-  return max_area_of_adu;
+  max_area = Math.min(area_lot * lot_coverage - area_house, d_house_back_to_lot_back * width_lot * 2/5);
+  return max_area;
 }
 
 // renders house rectangle
@@ -141,20 +151,78 @@ const render_box_paper = (length_lot, d_house_back_to_lot_back, d_wire_to_lot_ba
 }
 
 // MODEL checks if the size of adu is larger exceeds zone restrictions
-const adu_size_check = () => {
+const adu_size_check = (adu_width, adu_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone) => {
+  max_area = max_area_of_adu(area_lot, area_house, d_house_back_to_lot_back, width_lot, zone);
+  if (adu_width * adu_height > max_area) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
 
+// MODEL gets button position based on size and position of adu so its bottom right
+const get_button_position = (adu_element, diameter) => {
+  adu_element_position = adu_element.get('position');
+  adu_element_size = adu_element.get('size');
+  size_button_x = adu_element_position.x + adu_element_size.width;
+  size_button_y = adu_element_position.y + adu_element_size.height;
+  size_button_x -= diameter / 2
+  size_button_y -= diameter / 2
+  return [size_button_x, size_button_y]
 }
 
 // renders size dragging button attached to the adu rectangle
-const render_size_dragger = () => {
+const render_size_button = (adu_element) => {
+  DIAMETER = 15
+  size_button_position = get_button_position(adu_element, DIAMETER)
+  size_button_element = render_circle(adu_graph, DIAMETER, size_button_position[0], size_button_position[1])
+  //size_button_element.on('change:position', update_adu_element(size_button_element))
+  size_button_element.on('change:position', function(size_button_element, position) {
+    update_adu_element(adu_element, size_button_element)
+  });
+  return size_button_element
+}
 
+// updates size button when box moves and when oversized
+const update_size_button = (adu_element, size_button_element) => {
+  size_button_size = size_button_element.get('size')
+  size_button_position = get_button_position(adu_element, size_button_size.width)
+  //size_button_element.position(size_button_position.x, size_button_position.y)
+  console.log(adu_element.get('size'))
+  console.log(size_button_position)
+  size_button_element.position(100, 100)
+}
+
+// updates adu element when the size button is moved
+const update_adu_element = (adu_element, size_button_element) => {
+  adu_element_position = adu_element.get('position');
+  size_button_element_position = size_button_element.get('position')
+  new_adu_width = size_button_element_position.x - adu_element_position.x
+  new_adu_height = size_button_element_position.y - adu_element_position.y
+  if (adu_size_check(new_adu_width, new_adu_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)) {
+    
+    console.log('oversize')
+    update_size_button(adu_element, size_button_element)
+  }
+  else {
+    adu_element.resize(new_adu_width, new_adu_height)
+  }
 }
 
 // renders adu in box_paper
 const render_adu = (init_width, init_height) => {
-  INIT_X = 10
-  INIT_Y = 10
-  render_rectangle(adu_graph, init_height, init_width, INIT_X, INIT_Y)
+  if (adu_size_check(init_width, init_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)) {
+    console.log('oversize')
+    // write something that initializes smaller models
+    return render_adu(init_width/2, init_height/2)
+  }
+  else {
+    INIT_X = 10
+    INIT_Y = 20
+    adu_element = render_rectangle(adu_graph, init_height, init_width, INIT_X, INIT_Y)
+    return adu_element
+  }
 }
 
 
@@ -162,14 +230,7 @@ const render_adu = (init_width, init_height) => {
 render_lot(length_lot, width_lot);
 render_house(d_house_front_to_lot_front, d_right_of_house, length_lot, width_lot, d_house_back_to_lot_back, d_left_of_house);
 render_box_paper(length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot);
-render_adu(100, 200);
-
-// NOT IN USE resizes and repositions passed in Cell
-const setPosition = (element,x,y) => {
-  element.position(x,y)
-};
-const setHeight = (element,width,height) => {
-  element.resize(width, height);
-};
-
- 
+adu_element = render_adu(100, 200);
+size_check_results = adu_size_check(100, 200, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)
+size_button_element = render_size_button(adu_element)
+console.log(size_check_results)
