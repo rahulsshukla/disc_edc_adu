@@ -212,7 +212,8 @@ const update_adu_element = (adu_element, size_button_element) => {
 
 // renders adu in box_paper
 const render_adu = (init_width, init_height) => {
-  if (adu_size_check(init_width, init_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)) {
+    
+    if (adu_size_check(init_width, init_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)) {
     console.log('oversize')
     // write something that initializes smaller models
     return render_adu(init_width/2, init_height/2)
@@ -221,9 +222,16 @@ const render_adu = (init_width, init_height) => {
     INIT_X = 10
     INIT_Y = 20
     adu_element = render_rectangle(adu_graph, init_height, init_width, INIT_X, INIT_Y)
+    adu_element.on('debug', function(adu_element, position){
+        alert('adu moved to ' + position.x );
+        });
     return adu_element
   }
+  
 }
+
+joint.dia.Element.define
+
 
 
 // renders intial fixed stuff
@@ -231,6 +239,42 @@ render_lot(length_lot, width_lot);
 render_house(d_house_front_to_lot_front, d_right_of_house, length_lot, width_lot, d_house_back_to_lot_back, d_left_of_house);
 render_box_paper(length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot);
 adu_element = render_adu(100, 200);
+
 size_check_results = adu_size_check(100, 200, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)
 size_button_element = render_size_button(adu_element)
 console.log(size_check_results)
+
+
+
+
+// getting modal element
+var modal = document.getElementById("floorPlanModal");
+// getting the floor plan 
+var img1 = document.getElementById("floorPlan1");
+var img2 = document.getElementById("floorPlan2");
+// current floorPlan modal 
+var modalImg = document.getElementById("currentFP");
+// getting the label
+var labelText = document.getElementById("label");
+// on click display the modal and the image with the alt as the label
+img1.onclick = function(){
+  modal.style.display = "inline";
+  labelText.innerHTML = this.alt;
+  modalImg.src = this.src;
+  
+}
+
+img2.onclick = function(){
+  modal.style.display = "inline";
+  labelText.innerHTML = this.alt;
+  modalImg.src = this.src;
+  
+}
+
+// exit button/ the X
+var exit = document.getElementsByClassName("closeButton")[0];
+
+// close modal on click
+exit.onclick = function() {
+  modal.style.display = "none";
+}
