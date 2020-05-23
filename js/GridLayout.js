@@ -179,7 +179,7 @@ const render_size_button = (adu_element) => {
   size_button_position = get_button_position(adu_element, DIAMETER)
   size_button_element = render_circle(adu_graph, DIAMETER, size_button_position[0], size_button_position[1])
   //size_button_element.on('change:position', update_adu_element(size_button_element))
-  size_button_element.on('change:position', function(size_button_element, position) {
+  size_button_element.on('change:position', function(size_button_element) {
     console.log('size_button_element position changed');
     update_adu_element(adu_element, size_button_element);
   });
@@ -190,6 +190,7 @@ const render_size_button = (adu_element) => {
 const update_size_button = (adu_element, size_button_element) => {
   console.log('update_size_button triggered')
   //size_button_size = size_button_element.get('size')
+  console.log(size_button_element)
   //console.log(size_button_size)
   //size_button_position = get_button_position(adu_element, size_button_size.width)
   size_button_position = get_button_position(adu_element, 15)
@@ -225,10 +226,11 @@ const render_adu = (init_width, init_height) => {
     INIT_X = 10
     INIT_Y = 20
     adu_element = render_rectangle(adu_graph, init_height, init_width, INIT_X, INIT_Y)
-    //adu_element.on('change:position', function(adu_element, size_button_element) {
-      //console.log('adu changed position');
-      //update_size_button(adu_element, size_button_element);
-    //});
+    adu_element.on('change:position', function(adu_element) {
+      console.log('adu changed position');
+      console.log(size_button_element)
+      update_size_button(adu_element, size_button_element);
+    });
     return adu_element
   }
 }
@@ -241,9 +243,4 @@ render_box_paper(length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width
 adu_element = render_adu(100, 200);
 size_check_results = adu_size_check(100, 200, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)
 size_button_element = render_size_button(adu_element)
-update_size_button(adu_element, size_button_element)
-adu_element.on('change:position', function(adu_element, size_button_element) {
-  console.log('adu changed position');
-  update_size_button(adu_element, size_button_element);
-});
 console.log(size_check_results)
