@@ -189,11 +189,9 @@ const render_size_button = (adu_element) => {
 // updates size button when box moves and when oversized
 const update_size_button = (adu_element, size_button_element) => {
   console.log('update_size_button triggered')
-  //size_button_size = size_button_element.get('size')
-  console.log(size_button_element)
-  //console.log(size_button_size)
-  //size_button_position = get_button_position(adu_element, size_button_size.width)
-  size_button_position = get_button_position(adu_element, 15)
+  size_button_size = size_button_element.get('size')
+  console.log(size_button_size)
+  size_button_position = get_button_position(adu_element, size_button_size.width)
   size_button_element.position(size_button_position[0], size_button_position[1])
 }
 
@@ -204,9 +202,9 @@ const update_adu_element = (adu_element, size_button_element) => {
   size_button_element_position = size_button_element.get('position')
   new_adu_width = size_button_element_position.x - adu_element_position.x + DIAMETER / 2
   new_adu_height = size_button_element_position.y - adu_element_position.y + DIAMETER / 2
-  if (adu_size_check(new_adu_width, new_adu_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)) {
+  if (new_adu_height<=0 || new_adu_width<=0 || adu_size_check(new_adu_width, new_adu_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)) {
     
-    console.log('oversize')
+    console.log('oversize or undersize')
     // freeze size_button
     update_size_button(adu_element, size_button_element)
   }
@@ -228,7 +226,6 @@ const render_adu = (init_width, init_height) => {
     adu_element = render_rectangle(adu_graph, init_height, init_width, INIT_X, INIT_Y)
     adu_element.on('change:position', function(adu_element) {
       console.log('adu changed position');
-      console.log(size_button_element)
       update_size_button(adu_element, size_button_element);
     });
     return adu_element
