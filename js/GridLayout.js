@@ -163,6 +163,7 @@ const adu_size_check = (adu_width, adu_height, area_lot, area_house, d_house_bac
 
 // MODEL gets button position based on size and position of adu so its bottom right
 const get_button_position = (adu_element, diameter) => {
+  console.log('get_button_position triggered')
   adu_element_position = adu_element.get('position');
   adu_element_size = adu_element.get('size');
   size_button_x = adu_element_position.x + adu_element_size.width;
@@ -179,26 +180,25 @@ const render_size_button = (adu_element) => {
   size_button_element = render_circle(adu_graph, DIAMETER, size_button_position[0], size_button_position[1])
   //size_button_element.on('change:position', update_adu_element(size_button_element))
   size_button_element.on('change:position', function(size_button_element, position) {
-    update_adu_element(adu_element, size_button_element)
+    console.log('size_button_element position changed');
+    update_adu_element(adu_element, size_button_element);
   });
   return size_button_element
 }
 
 // updates size button when box moves and when oversized
 const update_size_button = (adu_element, size_button_element) => {
-  size_button_size = size_button_element.get('size')
-  size_button_position = get_button_position(adu_element, size_button_size.width)
+  console.log('update_size_button triggered')
+  //size_button_size = size_button_element.get('size')
+  //console.log(size_button_size)
+  //size_button_position = get_button_position(adu_element, size_button_size.width)
+  size_button_position = get_button_position(adu_element, 15)
   size_button_element.position(size_button_position[0], size_button_position[1])
-  console.log(adu_element.get('size'))
-  console.log(size_button_position)
-  //size_button_element.position(100, 100)
-  //size_button_element.attr({circle:{style:{'pointer-events':'none'}}})
-
 }
 
 // updates adu element when the size button is moved
 const update_adu_element = (adu_element, size_button_element) => {
-  console.log('change position event triggered')
+  console.log('change position event update_adu_element triggered')
   adu_element_position = adu_element.get('position');
   size_button_element_position = size_button_element.get('position')
   new_adu_width = size_button_element_position.x - adu_element_position.x + DIAMETER / 2
@@ -206,7 +206,7 @@ const update_adu_element = (adu_element, size_button_element) => {
   if (adu_size_check(new_adu_width, new_adu_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)) {
     
     console.log('oversize')
-    // freeze size_button or relocate it
+    // freeze size_button
     update_size_button(adu_element, size_button_element)
   }
   else {
@@ -225,10 +225,10 @@ const render_adu = (init_width, init_height) => {
     INIT_X = 10
     INIT_Y = 20
     adu_element = render_rectangle(adu_graph, init_height, init_width, INIT_X, INIT_Y)
-    adu_element.on('change:position', function(size_button_element, position) {
-      //console.log('adu changed position')
-      //update_size_button(adu_element, size_button_element)
-    });
+    //adu_element.on('change:position', function(adu_element, size_button_element) {
+      //console.log('adu changed position');
+      //update_size_button(adu_element, size_button_element);
+    //});
     return adu_element
   }
 }
@@ -241,4 +241,9 @@ render_box_paper(length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width
 adu_element = render_adu(100, 200);
 size_check_results = adu_size_check(100, 200, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)
 size_button_element = render_size_button(adu_element)
+update_size_button(adu_element, size_button_element)
+adu_element.on('change:position', function(adu_element, size_button_element) {
+  console.log('adu changed position');
+  update_size_button(adu_element, size_button_element);
+});
 console.log(size_check_results)
