@@ -1,18 +1,35 @@
 
+body{
+    background-image: url("../images/adu-background.png");
+    background-repeat: no-repeat;
+    height: 100px;
+    background-size: cover;
+    position: absolute;
+    top:0px;
+    left:0px;
+    width: 95%;
+    height: 95%;
+}
+
 .form_title{
     margin: 0 auto;
     width: 400px;
-    padding: 1em;
-
+    position: relative;
+    margin-left: 5%;
+    margin-bottom: 5%;
 }
-form {
+.form {
     /* Just to center the form on the page */
     margin: 0 auto;
+    margin-left: 42%;
+    margin-top: 10%;
     width: 400px;
     /* To see the outline of the form */
     padding: 1em;
     border: 1px solid #ccc;
     border-radius: 1em;
+    background-color: lightgray;
+    box-shadow:10px 15px 15px darkgrey;
 }
 
 
@@ -22,26 +39,17 @@ ul {
     margin: 0;
 }
 
-form li + li {
-    margin-top: 1em;
+li{
+    margin-bottom: 1%;
 }
 
 label {
     /* To make sure that all labels have the same size and are properly aligned */
-    display: inline-block;
-    width: 90px;
+    width: 40px;
     text-align: right;
 }
 
-input,
-textarea {
-    /* To make sure that all text fields have the same font settings By default, textareas have a monospace font */
-    font: 1em sans-serif;
-    /* To give the same size to all text fields */
-    width: 300px;
-    box-sizing: border-box; /* To harmonize the look & feel of text field border */
-    border: 1px solid #999;
-}
+
 
 input:focus,
 textarea:focus {
@@ -49,38 +57,37 @@ textarea:focus {
     border-color: #000;
 }
 
-textarea {
+textarea, input {
     /* To properly align multiline text fields with their labels */
     vertical-align: top;
     /* To give enough room to type some text */
-    height: 5em;
+    width: 50px;
+    height: 20px;
+    resize: none;
+    border-radius: 5px;
 }
 
-.button {
-    /* To position the buttons to the same position of the text fields */
-    padding-left: 90px;
-    /* same size as the label elements */
-}
+
+
 
 .submit_button {
     /* This extra margin represent roughly the same space as the space between the labels and their text fields */
-    background-color: gray;
-    border-radius: 4px;
-    color: blanchedalmond;
-    padding: 5px 5px;
+    background-color: white;
+    border-radius: 8px !important;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 20px;
     margin-left: 40%;
+    margin-top: 5%;
+    margin-bottom: 5%;
     cursor: pointer;
-    width: 100px;
+    width: 80px;
+    height: 40px;
+    transition: background-color .3s ;
 }
 .submit_button:hover {
     /* This extra margin represent roughly the same space as the space between the labels and their text fields */
-    background-color: darkslategray;
-    border-radius: 4px;
-    color: white;
+    background-color: darkgray;
+
     padding: 5px 5px;
     text-align: center;
     text-decoration: none;
