@@ -7,64 +7,61 @@
 	</head>
 	
 	<body>
+	<div class="form">
+		<h1 class="form_title">
+		ADU Data Input Form
+		</h1>
+			<form action="index.html" method="GET">
+				<ul>
+					<li>
+						<label for="front_lot">Distance from front of lot to house (ft):</label>
+						<input type="front_lot" id="front_lot" name="user_front_lot" />
+					</li>
+					<li>
+						<label for="back_lot">Distance from back of lot to house (ft):</label>
+						<input type="back_lot" id="back_lot" name="user_back_lot" />
+					</li>
+					<li>
+						<label for="left_lot">Distance from left of lot to house (ft):</label>
+						<input type="left_lot" id="left_lot" name="user_left_lot" />
+					</li>
+					<li>
+						<label for="right_lot">Distance from right of lot to house (ft):</label>
+						<input type="right_lot" id="right_lot" name="user_right_lot" />
+					</li>
+					<li>
+						<label for="house">Square footage of house (sq ft):</label>
+						<input id="house" name="user_house"></input>
+					</li>
+					<li>
+						<label for="house">House width (ft):</label>
+						<input id="house" name="house_width"></input>
+					</li>
+					<li>
+						<label for="house">House length (ft):</label>
+						<input id="house" name="house_length"></input>
+					</li>
+					<li>
+						<label for="house">House width:</label>
+						<textarea id="house" name="house_width"></textarea>
+					</li>
+					<li>
+						<label for="house">House length:</label>
+						<textarea id="house" name="house_length"></textarea>
+					</li>
+					<li>
+						<label for="zone">Zone (R1, R2, R3, etc.):</label>
+						<input id="zone" name="user_zone"></input>
+					</li>
+					<li>
+						<label for="phone">If there is a telephone wire, what is the distance between the wire and back of the lot? (ft):</label>
+						<input id="zone" name="user_tele"></input>
+					</li>
+				</ul>
 
-    <h1 class="form_title">
-      ADU Data Input Form
-    </h1>
-		<form action="index.html" method="GET">
-			<ul>
-				<li>
-					<label for="front_lot">Distance from front of lot to house (ft):</label>
-					<input type="front_lot" id="front_lot" name="user_front_lot" />
-				</li>
-				<li>
-					<label for="back_lot">Distance from back of lot to house (ft):</label>
-					<input type="back_lot" id="back_lot" name="user_back_lot" />
-				</li>
-				<li>
-					<label for="left_lot">Distance from left of lot to house (ft):</label>
-					<input type="left_lot" id="left_lot" name="user_left_lot" />
-				</li>
-				<li>
-					<label for="right_lot">Distance from right of lot to house (ft):</label>
-					<input type="right_lot" id="right_lot" name="user_right_lot" />
-				</li>
-				<li>
-					<label for="house">Square footage of house (sq ft):</label>
-					<input id="house" name="user_house"></input>
-				</li>
-				<li>
-					<label for="house">House width (ft):</label>
-					<input id="house" name="house_width"></input>
-				</li>
-				<li>
-					<label for="house">House length (ft):</label>
-					<input id="house" name="house_length"></input>
-				</li>
-				<li>
-					<label for="house">House width:</label>
-					<textarea id="house" name="house_width"></textarea>
-				</li>
-				<li>
-					<label for="house">House length:</label>
-					<textarea id="house" name="house_length"></textarea>
-				</li>
-        <li>
-          <label for="zone">Zone (R1, R2, R3, etc.):</label>
-          <input id="zone" name="user_zone"></input>
-        </li>
-        <li>
-          <label for="phone">If there is a telephone wire, what is the distance between the wire and back of the lot? (ft):</label>
-          <input id="zone" name="user_tele"></input>
-        </li>
-				<li>
-					<input class="submit_button"type="submit" value="Submit">
-				</li>
-			</ul>
+				<input class="submit_button"type="submit" value="Submit">
 
-			<input class="submit_button"type="submit" value="Submit">
-
-			</form>
+				</form>
 	</div>
 	</body>
 </html>
