@@ -3,6 +3,7 @@
 length_lot = 600
 width_lot = 300
 d_house_front_to_lot_front = 80
+
 d_house_back_to_lot_back = 350
 d_left_of_house = 40
 d_right_of_house = 90
@@ -26,11 +27,10 @@ DIAMETER = 15 // px diameter of adu size button
 // Dimensions: Variable units are feet-based, besides window width/height and px converter vars
 
 
-
-
 function parse_query(){
     var url_string = (window.location.href).toLowerCase()
     var url = new URL(url_string)
+
 
     d_house_front_to_lot_front = Number(url.searchParams.get("user_front_lot"))
     d_right_of_house = Number(url.searchParams.get("user_right_lot")) //change this once form takes more inputs
@@ -233,10 +233,12 @@ const update_button_position = (adu_element, size_button_element) => {
   console.log("end update button pos")
 
   adu_dragged = false
+
 }
 
 // updates adu element when the size button is moved
 const update_adu_element = (adu_element, size_button_element) => {
+
   //console.log('change position event update_adu_element triggered')
   adu_element_position = adu_element.get('position');
   size_button_element_position = size_button_element.get('position')
@@ -257,9 +259,11 @@ const update_adu_element = (adu_element, size_button_element) => {
   }
   else if (!button_locked_into_place) {
     console.log("resize: ("+new_adu_width+", "+new_adu_height+")")
+
     adu_element.resize(new_adu_width, new_adu_height)
   }
 }
+
 
 
 // renders size dragging button attached to the adu rectangle
@@ -300,6 +304,7 @@ const drag_adu = (adu_element, size_button_element) => {
 const render_adu = (init_width, init_height) => {
   if (adu_size_check(init_width, init_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)) {
     //console.log('oversize')
+
     // write something that initializes smaller models
     return render_adu(init_width/2, init_height/2)
   }
@@ -307,6 +312,8 @@ const render_adu = (init_width, init_height) => {
     INIT_X = 10
     INIT_Y = 20
     adu_element = render_rectangle(adu_graph, init_height, init_width, INIT_X, INIT_Y)
+    
+
     adu_element.on('change:position', function(adu_element) {
       //console.log('adu changed position');
       drag_adu(adu_element, size_button_element)
@@ -326,11 +333,50 @@ var lot_graph = new joint.dia.Graph;
 // New graph for adu graph
 var adu_graph = new joint.dia.Graph;
 
+
+  
 // renders intial fixed stuff
 render_lot(length_lot, width_lot);
 render_house(d_house_front_to_lot_front, d_right_of_house, length_lot, width_lot, d_house_back_to_lot_back, d_left_of_house);
 render_box_paper(length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot);
-adu_element = render_adu(adu_initial_width, adu_initial_height);
-//size_check_results = adu_size_check(adu_initial_width, adu_initial_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)
+
+adu_element = render_adu(100, 200);
+
+size_check_results = adu_size_check(100, 200, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)
 size_button_element = render_size_button(adu_element)
-//console.log(size_check_results)
+console.log(size_check_results)
+
+
+
+
+// getting modal element
+var modal = document.getElementById("floorPlanModal");
+// getting the floor plan 
+var img1 = document.getElementById("floorPlan1");
+var img2 = document.getElementById("floorPlan2");
+// current floorPlan modal 
+var modalImg = document.getElementById("currentFP");
+// getting the label
+var labelText = document.getElementById("label");
+// on click display the modal and the image with the alt as the label
+img1.onclick = function(){
+  modal.style.display = "inline";
+  labelText.innerHTML = this.alt;
+  modalImg.src = this.src;
+  
+}
+
+img2.onclick = function(){
+  modal.style.display = "inline";
+  labelText.innerHTML = this.alt;
+  modalImg.src = this.src;
+  
+}
+
+// exit button/ the X
+var exit = document.getElementsByClassName("closeButton")[0];
+
+// close modal on click
+exit.onclick = function() {
+  modal.style.display = "none";
+}
