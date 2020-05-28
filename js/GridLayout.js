@@ -56,6 +56,20 @@ function parse_query(){
 
     adu_initial_width = 0.25*d_house_back_to_lot_back
     adu_initial_height = 0.4*width_lot
+
+    area_house_in_ft = area_house
+    length_lot *= px_per_foot
+    width_lot *= px_per_foot
+    d_house_front_to_lot_front *= px_per_foot
+    d_house_back_to_lot_back *= px_per_foot
+    d_left_of_house *= px_per_foot
+    d_right_of_house *= px_per_foot
+    area_house *= px_per_foot
+    area_house *= px_per_foot
+    area_lot *= px_per_foot
+    area_lot *= px_per_foot
+    d_wire_to_lot_back *= px_per_foot // 5ft with scaler
+    zone = 1
 }
 
 // finds scale factor for small rectangle inside big rectangle (note "small" rectangle is ok to be larger in size)
@@ -105,13 +119,13 @@ const render_lot = (length_lot, width_lot) => {
   var paper = new joint.dia.Paper({
       el: document.getElementById('ADU-layout'),
       model: lot_graph,
-      width: length_lot*px_per_foot,
-      height: width_lot*px_per_foot,
+      width: length_lot,
+      height: width_lot,
       gridSize: 1,
       gridSize: 1,
       drawGrid: false,
       background: {
-          color: "green"
+          color: "#70A978"
       },
       restrictTranslate: true,
       interactive: false
@@ -122,9 +136,10 @@ const render_lot = (length_lot, width_lot) => {
 // input is FEET
 const render_rectangle = (graph, height, width, x, y) => {
     var rect = new joint.shapes.standard.Rectangle({ size: {
-      width: width*px_per_foot, height: height*px_per_foot }}).attr({body:
-        {fill: "white"}});
-    rect.position(x*px_per_foot,y*px_per_foot);
+      width: width, height: height }}).attr({body:
+        {fill: "#D8D8D8",
+          stroke: '#D8D8D8'}});
+    rect.position(x,y);
     graph.addCell(rect);
     return rect;
 };
@@ -132,8 +147,14 @@ const render_rectangle = (graph, height, width, x, y) => {
 // generates circle onto graph
 const render_circle = (graph, diameter, x, y) => {
   var circle = new joint.shapes.standard.Circle();
+  circle.attr({
+    body: {
+      fill:'white',
+      stroke: '#2176AE'
+    }
+  })
   circle.resize(diameter, diameter)
-  circle.position(x*px_per_foot,y*px_per_foot);
+  circle.position(x,y);
   graph.addCell(circle);
   return circle;
 }
@@ -181,7 +202,11 @@ const max_area_of_adu = (area_lot, area_house, d_house_back_to_lot_back, width_l
 const render_house = (d_house_front_to_lot_front, d_right_of_house, length_lot, width_lot, d_house_back_to_lot_back, d_left_of_house) => {
   house_properties = properties_house(d_house_front_to_lot_front, d_right_of_house, length_lot, width_lot, d_house_back_to_lot_back,
     d_left_of_house);
-  render_rectangle(lot_graph, house_properties[0], house_properties[1], house_properties[2], house_properties[3]);
+  text = 'House Area: '.concat(area_house_in_ft.toString(), ' sq.ft.')
+  house_element = render_rectangle(lot_graph, house_properties[0], house_properties[1], house_properties[2], house_properties[3]);
+  house_element.attr({label: {
+    text: text
+  }})
 }
 
 const render_box_paper = (length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot) => {
@@ -189,13 +214,13 @@ const render_box_paper = (length_lot, d_house_back_to_lot_back, d_wire_to_lot_ba
   var box_paper = new joint.dia.Paper({
         el: document.getElementById('ADU-box'),
         model: adu_graph,
-        width: (boundaries[1]-boundaries[0])*px_per_foot,
-        height: (boundaries[3]-boundaries[2])*px_per_foot,
+        width: (boundaries[1]-boundaries[0]),
+        height: (boundaries[3]-boundaries[2]),
         gridSize: 1,
         gridSize: 1,
         drawGrid: false,
         background: {
-            color: "darkgreen"
+            color: "#548759"
         },
         restrictTranslate: true
     });
@@ -220,10 +245,10 @@ const adu_size_check = (adu_width, adu_height, area_lot, area_house, d_house_bac
 const get_button_position = (adu_element, diameter) => {
   adu_element_position = adu_element.get('position');
   adu_element_size = adu_element.get('size');
-  size_button_x = adu_element_position.x*feet_per_px + adu_element_size.width*feet_per_px;
-  size_button_y = adu_element_position.y*feet_per_px + adu_element_size.height*feet_per_px;
-  size_button_x -= diameter*feet_per_px / 2
-  size_button_y -= diameter*feet_per_px / 2
+  size_button_x = adu_element_position.x + adu_element_size.width;
+  size_button_y = adu_element_position.y + adu_element_size.height;
+  size_button_x -= diameter / 2
+  size_button_y -= diameter / 2
   return [size_button_x, size_button_y]
 }
 
@@ -234,7 +259,7 @@ const update_button_position = (adu_element, size_button_element) => {
   size_button_position = get_button_position(adu_element, size_button_size.width)
   button_locked_into_place = true
   console.log(size_button_position)
-  size_button_element.position(size_button_position[0]*px_per_foot, size_button_position[1]*px_per_foot)
+  size_button_element.position(size_button_position[0], size_button_position[1])
   button_locked_into_place = false
   console.log("end update button pos")
 
@@ -267,7 +292,6 @@ const update_adu_element = (adu_element, size_button_element) => {
   }
 }
 
-
 // renders size dragging button attached to the adu rectangle
 const render_size_button = (adu_element) => {
   size_button_position = get_button_position(adu_element, DIAMETER)
@@ -278,6 +302,7 @@ const render_size_button = (adu_element) => {
     if(!adu_dragged) {
       console.log("update adu element")
       update_adu_element(adu_element, size_button_element);
+      update_adu_label(adu_element)
     }
     else {
       console.log("but was dragging, so don't adjust adu size")
@@ -301,6 +326,21 @@ const drag_adu = (adu_element, size_button_element) => {
   update_button_position(adu_element, size_button_element);
 }
 
+// MODEL calculated ADU area
+const get_adu_area = (adu_element) => {
+  adu_element_size = adu_element.get('size');
+  return Math.round(adu_element_size.height*feet_per_px * adu_element_size.width* feet_per_px);
+}
+
+// RENDER updates adu area label
+const update_adu_label = (adu_element) => {
+  adu_area = get_adu_area(adu_element)
+  text = 'House Area: '.concat(adu_area.toString(), ' sq.ft.')
+  adu_element.attr({label: {
+      text: text
+    }})
+}
+
 // renders adu in box_paper
 // input is in FEET
 const render_adu = (init_width, init_height) => {
@@ -317,6 +357,7 @@ const render_adu = (init_width, init_height) => {
       //console.log('adu changed position');
       drag_adu(adu_element, size_button_element)
     });
+    update_adu_label(adu_element)
     return adu_element
   }
 }
