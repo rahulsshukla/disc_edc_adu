@@ -48,8 +48,8 @@ function parse_query(){
     house_width =  parseInt(url.searchParams.get("house_width"))
     d_house_back_to_lot_back = parseInt(url.searchParams.get("user_back_lot"))
     length_lot = d_house_front_to_lot_front + house_length + d_house_back_to_lot_back
-    width_lot = house_width+d_right_of_house+d_left_of_house
-    area_lot = length_lot*width_lot
+    width_lot = house_width + d_right_of_house + d_left_of_house
+    area_lot = length_lot * width_lot
 
     px_per_foot = find_rect_fit_ratio(window_width, window_height, length_lot, width_lot)
     feet_per_px = 1/px_per_foot
@@ -71,7 +71,6 @@ function parse_query(){
     area_lot *= px_per_foot
     area_lot *= px_per_foot
     d_wire_to_lot_back *= px_per_foot // 5ft with scaler
-    zone = 1
 }
 
 // finds scale factor for small rectangle inside big rectangle (note "small" rectangle is ok to be larger in size)
