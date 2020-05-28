@@ -56,6 +56,8 @@ function parse_query(){
 
     adu_initial_width = 0.25*d_house_back_to_lot_back
     adu_initial_height = 0.4*width_lot
+    adu_initial_width *= px_per_foot
+    adu_initial_height *= px_per_foot
 
     area_house_in_ft = area_house
     length_lot *= px_per_foot
@@ -335,7 +337,7 @@ const get_adu_area = (adu_element) => {
 // RENDER updates adu area label
 const update_adu_label = (adu_element) => {
   adu_area = get_adu_area(adu_element)
-  text = 'House Area: '.concat(adu_area.toString(), ' sq.ft.')
+  text = 'ADU Area: '.concat(adu_area.toString(), ' sq.ft.')
   adu_element.attr({label: {
       text: text
     }})
