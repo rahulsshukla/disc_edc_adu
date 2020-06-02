@@ -12,42 +12,44 @@
 
 </head>
 <body>
-    <div class="sideBar">
-        <div id="title">
-            <h2>Floor Plans</h2>
+    <div id='grid-container'>
+        <div class="sideBar">
+            <div id="title">
+                <h2>Floor Plans</h2>
+            </div>
+
+            <img id="floorPlan1" class="FP" src="images/FP1.jpg" alt="Garage Floor Plan ">
+            <img id="floorPlan2" class="FP" src="images/FP2.jpg" alt="Floor Plan 1">
+
+            <div id="floorPlanModal" class="modal">
+                <span class="closeButton">&times;</span>
+                <img class="modal-content" id="currentFP">
+                <div id="label"></div>
+            </div>
         </div>
 
-        <img id="floorPlan1" class="FP" src="images/FP1.jpg" alt="Garage Floor Plan ">
-        <img id="floorPlan2" class="FP" src="images/FP2.jpg" alt="Floor Plan 1">
+        <div class="content">
+            <div id="visualization">
+                    <div id="ADU-layout" class="grid" style="position: absolute;"></div>
+                    <div id="ADU-box" class="grid" style="position: absolute;"> </div> 
+            </div>
 
-        <div id="floorPlanModal" class="modal">
-            <span class="closeButton">&times;</span>
-            <img class="modal-content" id="currentFP">
-            <div id="label"></div>
+
+            
+           
+
+
+            <!-- dependencies -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jointjs/2.1.0/joint.js"></script>
+
+            <!-- load in Rappid Layout Grid -->
+            <script src="joint.layout.GridLayout.js"></script>
+            <script src="./js/GridLayout.js"></script>
+
         </div>
-    </div>
-
-    <div class="content">
-        <div id="visualization">
-                <div id="ADU-layout" class="grid" style="position: absolute;"></div>
-                <div id="ADU-box" class="grid" style="position: absolute;"> </div> 
-        </div>
-
-
-        
-       
-
-
-        <!-- dependencies -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jointjs/2.1.0/joint.js"></script>
-
-        <!-- load in Rappid Layout Grid -->
-        <script src="joint.layout.GridLayout.js"></script>
-        <script src="./js/GridLayout.js"></script>
-
     </div>
 </body>
 </html>
