@@ -70,6 +70,10 @@ function parse_query(){
     area_house *= px_per_foot
     area_lot *= px_per_foot
     area_lot *= px_per_foot
+
+    if (isNaN(d_wire_to_lot_back)) {
+      d_wire_to_lot_back = 10
+    }
     d_wire_to_lot_back *= px_per_foot // 5ft with scaler
 }
 
