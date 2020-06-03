@@ -1,58 +1,53 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<link href="./css/form.css" rel="stylesheet">
-		<title>ADU Parameters</title>
-	</head>
+<html lang="en">
+<head>
+    <title>EDC ADU Layout</title>
+    
+    <!-- establish content delivery network for JointJS, JQuery, etc -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jointjs/2.1.0/joint.css" />
 
-	<body>
-	<div class="form">
-		<h1 class="form_title">
-		ADU Data Input Form
-		</h1>
-			<form action="index.html" method="GET">
-				<ul>
-					<li>
-						<label for="front_lot">Distance from front of lot to house (ft):</label>
-						<input type="front_lot" id="front_lot" name="user_front_lot" />
-					</li>
-					<li>
-						<label for="back_lot">Distance from back of lot to house (ft):</label>
-						<input type="back_lot" id="back_lot" name="user_back_lot" />
-					</li>
-					<li>
-						<label for="left_lot">Distance from left of lot to house (ft):</label>
-						<input type="left_lot" id="left_lot" name="user_left_lot" />
-					</li>
-					<li>
-						<label for="right_lot">Distance from right of lot to house (ft):</label>
-						<input type="right_lot" id="right_lot" name="user_right_lot" />
-					</li>
-					<li>
-						<label for="house">Square footage of house (sq ft):</label>
-						<input id="house" name="user_house"></input>
-					</li>
-					<li>
-						<label for="house">House width (ft):</label>
-						<input id="house" name="house_width"></input>
-					</li>
-					<li>
-						<label for="house">House length (ft):</label>
-						<input id="house" name="house_length"></input>
-					</li>
-						<label for="zone">Zone (R1, R2, R3, etc.):</label>
-						<input id="zone" name="user_zone"></input>
-					</li>
-					<li>
-						<label for="phone">If there is a telephone wire, what is the distance between the wire and back of the lot? (ft):</label>
-						<input id="zone" name="user_tele"></input>
-					</li>
-				</ul>
+    <!-- stylsheet for grid -->
+    <link href="./css/grid.css" rel="stylesheet">
 
-				<input class="submit_button"type="submit" value="Submit">
 
-				</form>
-	</div>
-	</body>
+</head>
+<body>
+    <div class="sideBar">
+        <div id="title">
+            <h2>Floor Plans</h2>
+        </div>
+
+        <img id="floorPlan1" class="FP" src="images/FP1.jpg" alt="Garage Floor Plan ">
+        <img id="floorPlan2" class="FP" src="images/FP2.jpg" alt="Floor Plan 1">
+
+        <div id="floorPlanModal" class="modal">
+            <span class="closeButton">&times;</span>
+            <img class="modal-content" id="currentFP">
+            <div id="label"></div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div id="visualization">
+                <div id="ADU-layout" class="grid" style="position: absolute;"></div>
+                <div id="ADU-box" class="grid" style="position: absolute;"> </div> 
+        </div>
+
+
+        
+       
+
+
+        <!-- dependencies -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jointjs/2.1.0/joint.js"></script>
+
+        <!-- load in Rappid Layout Grid -->
+        <script src="joint.layout.GridLayout.js"></script>
+        <script src="./js/GridLayout.js"></script>
+
+    </div>
+</body>
 </html>
