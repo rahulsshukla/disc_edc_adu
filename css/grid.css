@@ -2,6 +2,11 @@
     border: none;
 }
 
+#grid-container {
+  display: grid;
+  grid: 'a b';
+}
+
 #floorPlans{
     position: relative;
     top: 350px;
@@ -133,6 +138,7 @@
 
 
 .sideBar{
+  grid-area: 'a';
   position: fixed;
   background-color:rgba(0, 0, 0, 0.554);
   border-radius: 15px;
@@ -155,6 +161,7 @@
 }
 
 .content{
+  grid-area: 'b';
   background-image: url("../images/adu-background2.png");
   background-repeat: no-repeat;
   height: 100px;

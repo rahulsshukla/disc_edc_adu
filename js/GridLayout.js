@@ -193,9 +193,15 @@ const zone_lot_coverage = (zone) => {
 }
 
 // MODEL computes max area of adu
-const max_area_of_adu = (area_lot, area_house, d_house_back_to_lot_back, width_lot, zone) => {
+const max_area_of_adu = (area_lot, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back) => {
   lot_coverage = zone_lot_coverage(zone)
-  max_area = Math.min(area_lot * lot_coverage - area_house, d_house_back_to_lot_back * width_lot * 2/5);
+  lot_max_area = area_lot * lot_coverage - area_house
+  back_max_area = (d_house_back_to_lot_back - 10*px_per_foot - Math.max(3*px_per_foot, 10*px_per_foot - d_wire_to_lot_back)) * (width_lot - 6 * px_per_foot) * 2/5
+  max_area = Math.min(lot_max_area, back_max_area);
+  console.log('house area: ' + area_house*feet_per_px*feet_per_px)
+  console.log('max lot area: ' + lot_max_area*feet_per_px*feet_per_px)
+  console.log('max back area: ' + back_max_area*feet_per_px*feet_per_px)
+  console.log('max area: ' + max_area*feet_per_px*feet_per_px)
   return max_area;
 }
 
@@ -231,8 +237,8 @@ const render_box_paper = (length_lot, d_house_back_to_lot_back, d_wire_to_lot_ba
 }
 
 // MODEL checks if the size of adu is larger exceeds zone restrictions
-const adu_size_check = (adu_width, adu_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone) => {
-  max_area = max_area_of_adu(area_lot, area_house, d_house_back_to_lot_back, width_lot, zone);
+const adu_size_check = (adu_width, adu_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back) => {
+  max_area = max_area_of_adu(area_lot, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back);
   if (adu_width * adu_height > max_area) {
     return true;
   }
@@ -278,7 +284,7 @@ const update_adu_element = (adu_element, size_button_element) => {
 
   if (!button_locked_into_place && (new_adu_height<=0 || new_adu_width<=0 ||
     adu_size_check(new_adu_width, new_adu_height, area_lot, area_house,
-    d_house_back_to_lot_back, width_lot, zone))) {
+    d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back))) {
 
     console.log('oversize or undersize')
     // freeze size_button
@@ -315,10 +321,10 @@ const render_size_button = (adu_element) => {
 // MODEL returns ADU boundaries free space from physical inputs
 const boundaries_free_space = (length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot) => {
   // returns the x_lower, x_upper, y_lower, y_higher boundaries of adu box
-  x_lower = 10*px_per_foot - d_wire_to_lot_back;  // size of 10ft with scaler
+  x_lower = Math.max(3*px_per_foot, 10*px_per_foot - d_wire_to_lot_back);  // size of 10ft with scaler
   x_upper = d_house_back_to_lot_back - 10*px_per_foot;  // size of 10ft with scaler
-  y_lower = 0;
-  y_upper = width_lot;
+  y_lower = 3 * px_per_foot;
+  y_upper = width_lot - 3 * px_per_foot;
   return [x_lower, x_upper, y_lower, y_upper];
 }
 
@@ -345,7 +351,7 @@ const update_adu_label = (adu_element) => {
 // renders adu in box_paper
 // input is in FEET
 const render_adu = (init_width, init_height) => {
-  if (adu_size_check(init_width, init_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)) {
+  if (adu_size_check(init_width, init_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back)) {
     //console.log('oversize')
     // write something that initializes smaller models
     return render_adu(init_width/2, init_height/2)
@@ -414,6 +420,6 @@ render_lot(length_lot, width_lot);
 render_house(d_house_front_to_lot_front, d_right_of_house, length_lot, width_lot, d_house_back_to_lot_back, d_left_of_house);
 render_box_paper(length_lot, d_house_back_to_lot_back, d_wire_to_lot_back, width_lot);
 adu_element = render_adu(adu_initial_width, adu_initial_height);
-//size_check_results = adu_size_check(adu_initial_width, adu_initial_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone)
+//size_check_results = adu_size_check(adu_initial_width, adu_initial_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back)
 size_button_element = render_size_button(adu_element)
 //console.log(size_check_results)
