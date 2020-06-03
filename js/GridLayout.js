@@ -47,6 +47,8 @@ function parse_query(){
     house_length =  parseInt(url.searchParams.get("house_length"))
     house_width =  parseInt(url.searchParams.get("house_width"))
     d_house_back_to_lot_back = parseInt(url.searchParams.get("user_back_lot"))
+    direction = url.searchParams.get("direction")
+    console.log(direction)
     length_lot = d_house_front_to_lot_front + house_length + d_house_back_to_lot_back
     width_lot = house_width + d_right_of_house + d_left_of_house
     area_lot = length_lot * width_lot
@@ -71,6 +73,23 @@ function parse_query(){
     area_lot *= px_per_foot
     area_lot *= px_per_foot
     d_wire_to_lot_back *= px_per_foot // 5ft with scaler
+}
+
+
+function set_compass(){
+  var comp = document.getElementById('compass')
+  if(direction == 'e'){
+    console.log('test')
+    comp.className = 'compass2'
+  }
+  else if(direction == 's'){
+    console.log('test')
+    comp.className = 'compass3'
+  }
+  else if(direction == 'w'){
+    console.log('test')
+    comp.className = 'compass4'
+  }
 }
 
 // finds scale factor for small rectangle inside big rectangle (note "small" rectangle is ok to be larger in size)
@@ -410,6 +429,7 @@ exit.onclick = function() {
 
 
 parse_query()
+set_compass()
 // Initialize graph
 var lot_graph = new joint.dia.Graph;
 // New graph for adu graph
