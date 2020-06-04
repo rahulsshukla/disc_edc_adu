@@ -41,7 +41,26 @@
 	    </div>
 
         <div id='tables'>
-	        <table id='lot-area-table' class="table">
+        	<table id='adu-area-table' class="table table-sm table-bordered">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">ADU Length</th>
+			      <th scope="col">ADU Width</th>
+			      <th scope="col">ADU Area</th>
+			      <th scope="col">Max ADU Area</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <td id='adu-length'>length</td>
+			      <td id='adu-width'>width</td>
+			      <td id='adu-area'>area</td>
+			      <td id='max-adu-area'>area</td>
+			    </tr>
+			  </tbody>
+			</table>
+
+	        <table id='lot-area-table' class="table table-sm table-bordered">
 	  			<thead class="thead-dark">
 	    			<tr>
 	      				<th scope="col">Lot Area</th>
@@ -60,7 +79,7 @@
 	  			</tbody>
 			</table>
 
-			<table id='backlot-area-table' class="table">
+			<table id='backlot-area-table' class="table table-sm table-bordered">
 			  <thead class="thead-dark">
 			    <tr>
 			      <th scope="col">Backlot Area</th>
@@ -77,22 +96,6 @@
 			  </tbody>
 			</table>
 
-			<table id='adu-area-table' class="table">
-			  <thead class="thead-dark">
-			    <tr>
-			      <th scope="col">ADU Length</th>
-			      <th scope="col">ADU Width</th>
-			      <th scope="col">Max ADU Area</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr>
-			      <td id='adu-length'>length</td>
-			      <td id='adu-width'>width</td>
-			      <td id='max-adu-area'>area</td>
-			    </tr>
-			  </tbody>
-			</table>
 		</div>
 
     </div>
