@@ -82,17 +82,21 @@ function parse_query(){
 
 function set_compass(){
   var comp = document.getElementById('compass')
-  if(direction == 'e'){
-    console.log('test')
+  if(direction == 'n'){
+
     comp.className = 'compass2'
   }
-  else if(direction == 's'){
-    console.log('test')
-    comp.className = 'compass3'
+  else if(direction == 'e'){
+
+    comp.className = 'compass1'
   }
-  else if(direction == 'w'){
-    console.log('test')
+  else if(direction == 's'){
+
     comp.className = 'compass4'
+  }
+
+  else{
+    comp.className = 'compass3'
   }
 }
 
