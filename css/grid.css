@@ -211,38 +211,16 @@
 
 .compass-contain .compass4{
   position: relative;
-  width: 90%;
+  width: 100%;
   transform: rotate(270deg);
 }
 
 .compass-contain #compass-title{
   position: relative;
   font-size: 24px;
-  margin-left: 25%;
-  margin-right: auto;
   color: aliceblue;
 }
 
-#front-lot{
-  margin-left: 90%;
-  position: relative;
-  display: inline;
-  transform: rotate(90deg);
-}
- #front-lot{
-  margin-left: 90%;
-  margin-top: 35%;
-  position: absolute;
-  display: inline;
-  transform: rotate(90deg);
-  transform(rotate(270deg));
-}
-
-#front-text{
-  
-  display: inline;
-  font-size: 26px;
-}
 
 /*
 <div id="front-lot">
