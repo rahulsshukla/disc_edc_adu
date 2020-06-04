@@ -333,6 +333,7 @@ const render_size_button = (adu_element) => {
       console.log("update adu element")
       update_adu_element(adu_element, size_button_element);
       update_adu_label(adu_element)
+      update_table(adu_element)
     }
     else {
       console.log("but was dragging, so don't adjust adu size")
@@ -443,8 +444,9 @@ const get_table_elements = (area_lot, lot_coverage, area_house, d_house_back_to_
   back_area = d_house_back_to_lot_back * width_lot
   back_area *= feet_per_px
   back_area *= feet_per_px
-  back_max_area = back_area * 2/5
-  back_max_area = Math.round(back_max_area)
+  max_back_area = back_area * 2/5
+  max_back_area = Math.round(max_back_area)
+  console.log(max_back_area)
 
   adu_element_size = adu_element.get('size');
   adu_length = adu_element_size.width * feet_per_px
@@ -455,7 +457,8 @@ const get_table_elements = (area_lot, lot_coverage, area_house, d_house_back_to_
   max_adu_area = max_area_of_adu(area_lot, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back)
   max_adu_area = Math.round(max_adu_area)
 
-  return [area_lot, lot_coverage, area_house, lot_max_area, back_area, back_max_area, adu_length, adu_width, adu_area, max_adu_area]
+  console.log(max_back_area)
+  return [area_lot, lot_coverage, area_house, lot_max_area, back_area, max_back_area, adu_length, adu_width, adu_area, max_adu_area]
 }
 
 const render_table = (area_lot, lot_coverage, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back, adu_element) => {
@@ -470,10 +473,19 @@ const render_table = (area_lot, lot_coverage, area_house, d_house_back_to_lot_ba
 
   document.getElementById('adu-length').innerHTML = table_elements[6]
   document.getElementById('adu-width').innerHTML = table_elements[7]
-  //document.getElementById('adu-area').innerHTML = table_elements[8]
+  document.getElementById('adu-area').innerHTML = table_elements[8]
   document.getElementById('max-adu-area').innerHTML = table_elements[9]
 }
 
+const update_table = (adu_element) => {
+  adu_element_size = adu_element.get('size');
+  adu_length = Math.round(adu_element_size.width * feet_per_px)
+  adu_width = Math.round(adu_element_size.height * feet_per_px)
+  adu_area = Math.round(adu_element_size.height*feet_per_px * adu_element_size.width* feet_per_px);
+  document.getElementById('adu-length').innerHTML = adu_length
+  document.getElementById('adu-width').innerHTML = adu_width
+  document.getElementById('adu-area').innerHTML = adu_area
+}
 
 parse_query()
 set_compass()
