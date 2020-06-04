@@ -72,6 +72,10 @@ function parse_query(){
     area_house *= px_per_foot
     area_lot *= px_per_foot
     area_lot *= px_per_foot
+    // if input isnt a number
+    if (isNaN(d_wire_to_lot_back)) {
+      d_wire_to_lot_back = 10
+    }
     d_wire_to_lot_back *= px_per_foot // 5ft with scaler
 }
 
@@ -215,7 +219,7 @@ const zone_lot_coverage = (zone) => {
 const max_area_of_adu = (area_lot, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back) => {
   lot_coverage = zone_lot_coverage(zone)
   lot_max_area = area_lot * lot_coverage - area_house
-  back_max_area = (d_house_back_to_lot_back - 10*px_per_foot - Math.max(3*px_per_foot, 10*px_per_foot - d_wire_to_lot_back)) * (width_lot - 6 * px_per_foot) * 2/5
+  back_max_area = (d_house_back_to_lot_back) * (width_lot) * 2/5
   max_area = Math.min(lot_max_area, back_max_area);
   console.log('house area: ' + area_house*feet_per_px*feet_per_px)
   console.log('max lot area: ' + lot_max_area*feet_per_px*feet_per_px)
@@ -426,6 +430,49 @@ exit.onclick = function() {
 }
 
 
+// get list of table elements from inputs/adu element
+const get_table_elements = (area_lot, lot_coverage, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back, adu_element) => {
+  area_lot *= feet_per_px
+  area_lot *= feet_per_px
+  lot_coverage *= 100
+  area_house *= feet_per_px
+  area_house *= feet_per_px
+  area_house = Math.round(area_house)
+  lot_max_area = area_lot * lot_coverage - area_house
+
+  back_area = d_house_back_to_lot_back * width_lot
+  back_area *= feet_per_px
+  back_area *= feet_per_px
+  back_max_area = back_area * 2/5
+  back_max_area = Math.round(back_max_area)
+
+  adu_element_size = adu_element.get('size');
+  adu_length = adu_element_size.width * feet_per_px
+  adu_length = Math.round(adu_length)
+  adu_width = adu_element_size.height * feet_per_px
+  adu_width = Math.round(adu_width)
+  adu_area = Math.round(adu_element_size.height*feet_per_px * adu_element_size.width* feet_per_px)
+  max_adu_area = max_area_of_adu(area_lot, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back)
+  max_adu_area = Math.round(max_adu_area)
+
+  return [area_lot, lot_coverage, area_house, lot_max_area, back_area, back_max_area, adu_length, adu_width, adu_area, max_adu_area]
+}
+
+const render_table = (area_lot, lot_coverage, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back, adu_element) => {
+  table_elements = get_table_elements(area_lot, lot_coverage, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back, adu_element)
+  document.getElementById('lot-area').innerHTML = table_elements[0]
+  document.getElementById('lot-coverage').innerHTML = table_elements[1]
+  document.getElementById('house-area').innerHTML = table_elements[2]
+  document.getElementById('max-adu-area-lot').innerHTML = table_elements[3]
+
+  document.getElementById('backlot-area').innerHTML = table_elements[4]
+  document.getElementById('max-adu-area-backlot').innerHTML = table_elements[5]
+
+  document.getElementById('adu-length').innerHTML = table_elements[6]
+  document.getElementById('adu-width').innerHTML = table_elements[7]
+  //document.getElementById('adu-area').innerHTML = table_elements[8]
+  document.getElementById('max-adu-area').innerHTML = table_elements[9]
+}
 
 
 parse_query()
@@ -443,3 +490,5 @@ adu_element = render_adu(adu_initial_width, adu_initial_height);
 //size_check_results = adu_size_check(adu_initial_width, adu_initial_height, area_lot, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back)
 size_button_element = render_size_button(adu_element)
 //console.log(size_check_results)
+render_table(area_lot, lot_coverage, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back, adu_element)
+
