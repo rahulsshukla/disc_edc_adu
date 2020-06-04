@@ -2,7 +2,7 @@
     border: none;
 }
 
-#grid-container {
+.grid-container {
   display: grid;
   grid: 'a b'
         'a c';
@@ -10,10 +10,10 @@
   padding: 10px;
 }
 
-#tables {
-  grid-area: 'c';
-  margin-top: 70vh;
-  margin-left: 20vw;
+.tables {
+  grid-area: c;
+  margin-left: 200px;
+  /*width: fit-sidebar;*/
 }
 
 #floorPlans{
@@ -147,7 +147,7 @@
 
 
 .sideBar{
-  grid-area: 'a';
+  grid-area: a;
   position: fixed;
   background-color:rgba(0, 0, 0, 0.554);
   border-radius: 15px;
@@ -170,7 +170,7 @@
 }
 
 .content{
-  grid-area: 'b';
+  grid-area: b;
   background-image: url("../images/adu-background2.png");
   background-repeat: no-repeat;
   height: 100px;

@@ -450,6 +450,7 @@ const get_table_elements = (area_lot, lot_coverage, area_house, d_house_back_to_
   back_area *= feet_per_px
   max_back_area = back_area * 2/5
   max_back_area = Math.round(max_back_area)
+  back_area = Math.round(back_area)
   console.log(max_back_area)
 
   adu_element_size = adu_element.get('size');
@@ -508,3 +509,9 @@ size_button_element = render_size_button(adu_element)
 //console.log(size_check_results)
 render_table(area_lot, lot_coverage, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back, adu_element)
 
+table_width = length_lot.toString() + "px"
+console.log(table_width)
+table_margin_top = (width_lot+120).toString() + "px"
+console.log(table_margin_top)
+document.getElementsByClassName('tables')[0].style.marginTop = table_margin_top
+document.getElementsByClassName('tables')[0].style.width = table_width
