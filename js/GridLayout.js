@@ -484,6 +484,7 @@ const render_table = (area_lot, lot_coverage, area_house, d_house_back_to_lot_ba
   document.getElementById('max-adu-area').innerHTML = table_elements[9]
 }
 
+// update adu width, length, and area as the adu size changes
 const update_table = (adu_element) => {
   adu_element_size = adu_element.get('size');
   adu_length = Math.round(adu_element_size.width * feet_per_px)
@@ -513,7 +514,7 @@ render_table(area_lot, lot_coverage, area_house, d_house_back_to_lot_back, width
 
 table_width = length_lot.toString() + "px"
 console.log(table_width)
-table_margin_top = (width_lot+120).toString() + "px"
+table_margin_top = (width_lot + window.innerHeight * (1-margin_top)).toString() + "px"
 console.log(table_margin_top)
 document.getElementsByClassName('tables')[0].style.marginTop = table_margin_top
 document.getElementsByClassName('tables')[0].style.width = table_width
