@@ -8,33 +8,91 @@
 
     <!-- stylsheet for grid -->
     <link href="./css/grid.css" rel="stylesheet">
-
+    <!-- bootstrap import -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 <body>
-    <div class="sideBar">
-        <div id="title">
-            <h2>Floor Plans</h2>
-        </div>
+	<div class='grid-container'>
 
-        <img id="floorPlan1" class="FP" src="images/FP1.jpg" alt="Garage Floor Plan ">
-        <img id="floorPlan2" class="FP" src="images/FP2.jpg" alt="Floor Plan 1">
+	    <div class="sideBar">
+	        <div id="title">
+	            <h2>Floor Plans</h2>
+	        </div>
 
-        <div id="floorPlanModal" class="modal">
-            <span class="closeButton">&times;</span>
-            <img class="modal-content" id="currentFP">
-            <div id="label"></div>
-        </div>
+	        <img id="floorPlan1" class="FP" src="images/FP1.jpg" alt="Garage Floor Plan ">
+	        <img id="floorPlan2" class="FP" src="images/FP2.jpg" alt="Floor Plan 1">
+
+	        <div id="floorPlanModal" class="modal">
+	            <span class="closeButton">&times;</span>
+	            <img class="modal-content" id="currentFP">
+	            <div id="label"></div>
+	        </div>
+	    </div>
+
+	    <div class="content">
+	        <div id="visualization">
+	                <div id="ADU-layout" class="grid" style="position: absolute;"></div>
+	                <div id="ADU-box" class="grid" style="position: absolute;"> </div> 
+	        </div>
+	    </div>
+
+        <div id='tables'>
+	        <table id='lot-area-table' class="table">
+	  			<thead class="thead-dark">
+	    			<tr>
+	      				<th scope="col">Lot Area</th>
+	      				<th scope="col">Max Lot Coverage %</th>
+	      				<th scope="col">House Area</th>
+	      				<th scope="col">Max ADU Area Constrained by Lot Coverage</th>
+	    			</tr>
+	  			</thead>
+	  			<tbody>
+	    			<tr>
+	      				<td id='lot-area'>area</td>
+	      				<td id='lot-coverage'>%</td>
+	      				<td id='house-area'>area</td>
+	      				<td id='max-adu-area-lot'>area</td>
+	    			</tr>
+	  			</tbody>
+			</table>
+
+			<table id='backlot-area-table' class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">Backlot Area</th>
+			      <th scope="col">Percent Coverage</th>
+			      <th scope="col">Max ADU Area Constrained by Backlot Coverage</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <td id='backlot-area'>area</td>
+			      <td>40%</td>
+			      <td id='max-adu-area-backlot'>area</td>
+			    </tr>
+			  </tbody>
+			</table>
+
+			<table id='adu-area-table' class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">ADU Length</th>
+			      <th scope="col">ADU Width</th>
+			      <th scope="col">Max ADU Area</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <td id='adu-length'>length</td>
+			      <td id='adu-width'>width</td>
+			      <td id='max-adu-area'>area</td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+
     </div>
-
-    <div class="content">
-        <div id="visualization">
-                <div id="ADU-layout" class="grid" style="position: absolute;"></div>
-                <div id="ADU-box" class="grid" style="position: absolute;"> </div> 
-        </div>
-
-
-        
        
 
 
