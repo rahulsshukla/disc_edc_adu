@@ -514,7 +514,7 @@ render_table(area_lot, lot_coverage, area_house, d_house_back_to_lot_back, width
 
 table_width = length_lot.toString() + "px"
 console.log(table_width)
-table_margin_top = (width_lot + window.innerHeight * (1-margin_top)).toString() + "px"
+table_margin_top = (width_lot + window.innerHeight * margin_top).toString() + "px"
 console.log(table_margin_top)
 document.getElementsByClassName('tables')[0].style.marginTop = table_margin_top
 document.getElementsByClassName('tables')[0].style.width = table_width
