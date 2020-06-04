@@ -439,18 +439,20 @@ exit.onclick = function() {
 const get_table_elements = (area_lot, lot_coverage, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back, adu_element) => {
   area_lot *= feet_per_px
   area_lot *= feet_per_px
+  area_lot = Math.round(area_lot)
   lot_coverage *= 100
   area_house *= feet_per_px
   area_house *= feet_per_px
   area_house = Math.round(area_house)
   lot_max_area = area_lot * lot_coverage - area_house
+  lot_max_area = Math.round(lot_max_area)
 
   back_area = d_house_back_to_lot_back * width_lot
   back_area *= feet_per_px
   back_area *= feet_per_px
+  back_area = Math.round(back_area)
   max_back_area = back_area * 2/5
   max_back_area = Math.round(max_back_area)
-  back_area = Math.round(back_area)
   console.log(max_back_area)
 
   adu_element_size = adu_element.get('size');
@@ -458,7 +460,7 @@ const get_table_elements = (area_lot, lot_coverage, area_house, d_house_back_to_
   adu_length = Math.round(adu_length)
   adu_width = adu_element_size.height * feet_per_px
   adu_width = Math.round(adu_width)
-  adu_area = Math.round(adu_element_size.height*feet_per_px * adu_element_size.width* feet_per_px)
+  adu_area = Math.round(adu_element_size.height*feet_per_px * adu_element_size.width* feet_per_px) //exception to the round first items before calculation
   max_adu_area = max_area_of_adu(area_lot, area_house, d_house_back_to_lot_back, width_lot, zone, d_wire_to_lot_back)
   max_adu_area = Math.round(max_adu_area)
 
